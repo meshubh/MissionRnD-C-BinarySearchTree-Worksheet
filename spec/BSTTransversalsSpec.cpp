@@ -169,7 +169,7 @@ namespace spec
 				}
 			}
 
-		};/*
+		};
 		[TestMethod, Timeout(2000)]
 		void Transversals_CustomTestCase()
 		{
@@ -195,6 +195,6 @@ namespace spec
 				}
 			}
 			
-		};*/
+		};
 	};
 }

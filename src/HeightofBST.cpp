@@ -64,14 +64,21 @@ int tree_height(struct node *root)
 }
 int get_height(struct node *root)
 {
+	if (root == NULL)
+		return -1;
 	return tree_height(root);
 }
 
-int get_left_subtree_sum(struct node *root){
+int get_left_subtree_sum(struct node *root)
+{
+	if (root == NULL)
+		return -1;
 	return tree_sum(root->left);
 }
 
-int get_right_subtree_sum(struct node *root){
+int get_right_subtree_sum(struct node *root)
+{
+	if (root == NULL)
+		return -1;
 	return tree_sum(root->right);
 }
-
