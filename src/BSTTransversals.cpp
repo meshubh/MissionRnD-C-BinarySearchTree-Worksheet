@@ -21,15 +21,66 @@ struct node{
 	int data;
 	struct node *right;
 };
-
-
-void inorder(struct node *root, int *arr){
-	
-}
-void preorder(struct node *root, int *arr){
-	
-}
-void postorder(struct node *root, int *arr){
-	
+int countnodes(struct node *root)
+{
+	if (root == NULL)
+		return 0;
+	else
+		return(countnodes(root->left) + 1 + countnodes(root->right));
 }
 
+void storeInorder(struct node *root, int *arr, int *count)
+{
+	if (root == NULL)
+		return;
+
+	storeInorder(root->left, arr, count);
+	*(arr + *count) = root->data;
+	*count = *count + 1;
+	storeInorder(root->right, arr, count);
+}
+void storePreorder(struct node *root, int *arr, int * count)
+{
+	if (root == NULL)
+		return;
+	*(arr + *count) = root->data;
+	*count = *count + 1;
+	storePreorder(root->left, arr, count);
+	storePreorder(root->right, arr, count);
+
+}
+void storePostorder(struct node *root, int *arr, int *count)
+{
+	if (root == NULL)
+		return;
+
+	storePostorder(root->left, arr, count);
+	storePostorder(root->right, arr, count);
+	*(arr + *count) = root->data;
+	*count = *count + 1;
+}
+
+void inorder(struct node *root, int *arr)
+{
+	if (arr == NULL)
+		return;
+	int count = 0;
+	storeInorder(root, arr, &count);
+	return;
+}
+void preorder(struct node *root, int *arr)
+{
+	if (arr == NULL)
+		return;
+	int count = 0;
+	storePreorder(root, arr, &count);
+	return;
+}
+void postorder(struct node *root, int *arr)
+{
+	if (arr == NULL)
+		return;
+	int count = 0;
+	storePostorder(root, arr, &count);
+	return;
+}
