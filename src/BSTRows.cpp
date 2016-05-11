@@ -85,14 +85,12 @@ void tree_row_traversal(struct node *root, int *arr, int size)
 		*(arr + 1) = root->right->data;
 		iterator1 = 2;
 	}
-	else if (root->left != NULL && root->right == NULL)
-	{
-		*(arr + 2) = root->left->data;
-		iterator1 = 2;
-	}
 	else
 	{
-		return ;
+		if (root->right == NULL && root->left == NULL)
+			return;
+		*(arr + 1) = root->left->data;
+		iterator1 = 2;
 	}
 	for (iterator = 1; iterator1 < size; iterator++)
 	{
