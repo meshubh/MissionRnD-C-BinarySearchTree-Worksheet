@@ -33,9 +33,27 @@ struct node{
 	struct node *right;
 };
 
-
-struct node * convert_array_to_bst(int *arr, int len){
-	
-	return NULL;
+struct node * new_node_spec(int value)
+{
+	struct node *temp = (struct node *)malloc(sizeof(struct node));
+	temp->data = value;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
 }
-
+struct node *array_to_bst(int arr[], int start, int end)
+{
+	if (start > end)
+		return NULL;
+	int mid = (start + end) / 2;
+	struct node *root = new_node_spec(arr[mid]);
+	root->left = array_to_bst(arr, start, mid - 1);
+	root->right = array_to_bst(arr, mid + 1, end);
+	return root;
+}
+struct node * convert_array_to_bst(int *arr, int len)
+{
+	if (arr==NULL || len < 1)
+		return NULL;
+	return array_to_bst(arr, 0, len - 1);
+}

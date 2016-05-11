@@ -30,8 +30,83 @@ struct node{
 };
 
 
-
+int count_nodes(struct node *root)
+{
+	if (root == NULL)
+		return 0;
+	else
+		return(count_nodes(root->left) + 1 + count_nodes(root->right));
+}
+void search_in_bst_store_in_arr(struct node *root, int iterator, int *iterator1, int *arr)
+{
+	if (root->data == *(arr + iterator))
+	{
+		if (root->right == NULL && root->left == NULL)
+		{
+			return;
+		}
+		if (root->right != NULL)
+		{
+			if (root->right->data != NULL)
+			{
+				*(arr + (*iterator1)) = root->right->data;
+				*iterator1 = *iterator1 + 1;
+			}
+		}
+		if (root->left != NULL)
+		{
+			if (root->left->data != NULL)
+			{
+				*(arr + (*iterator1)) = root->left->data;
+				*iterator1 = *iterator1 + 1;
+			}
+		}
+		return;
+	}
+	if (root->data < *(arr + iterator))
+		return search_in_bst_store_in_arr(root->right, iterator, iterator1, arr);
+	else if (root->data > *(arr + iterator))
+		return search_in_bst_store_in_arr(root->left, iterator, iterator1, arr);
+}
+void tree_row_traversal(struct node *root, int *arr, int size)
+{
+	int iterator, iterator1 = 0;
+	if (root == NULL)
+		return;
+	*(arr + 0) = root->data;
+	if (root->right != NULL && root->left != NULL)
+	{
+		*(arr + 1) = root->right->data;
+		*(arr + 2) = root->left->data;
+		iterator1 = 3;
+	}
+	else if (root->right != NULL && root->left == NULL)
+	{
+		*(arr + 1) = root->right->data;
+		iterator1 = 2;
+	}
+	else if (root->left != NULL && root->right == NULL)
+	{
+		*(arr + 2) = root->left->data;
+		iterator1 = 2;
+	}
+	else
+	{
+		return ;
+	}
+	for (iterator = 1; iterator1 < size; iterator++)
+	{
+		search_in_bst_store_in_arr(root, iterator, &iterator1, arr);
+	}
+}
 int* BSTRighttoLeftRows(struct node* root)
 {
-    return NULL;
+	if (root == NULL)
+		return NULL;
+	int len = 0;
+	len = count_nodes(root);
+	int *ans;
+	ans = (int*)malloc(len * sizeof(int));
+	tree_row_traversal(root, ans, len);
+    return ans;
 }
